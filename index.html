@@ -26,22 +26,21 @@
 </body>
 <script type="text/javascript">
 
-            //if(navigator.geolocation) {
-                //console.log(navigator.geolocation);
-				//navigator.geolocation.getCurrentPosition(success);
+            if(navigator.geolocation) {
+                console.log(navigator.geolocation);
+				navigator.geolocation.getCurrentPosition(success);
                 			// if geolocation supported, call function
-			//} else {
-				//window.alert('Your browser doesn\'t support the geolocation api.');
-			//}
-           // function success(position) {
-			//var latitude		= position.coords.latitude;							// set latitude variable
-			//var longitude		= position.coords.longitude;						// set longitude variable
-			//console.log(latitude,longitude);
-			//getWeather(latitude,longitude);											// get weather for the lat/long
-		//}
-    //function getWeather(latitude,longitude){
-    //link="http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=e4b3d2e05015c304bf7ea1b96a5a9d6e";
-	link="http://api.openweathermap.org/data/2.5/forecast/daily?q=Chennai&mode=xml&units=metric&cnt=7&appid=e4b3d2e05015c304bf7ea1b96a5a9d6e";
+			} else {
+				window.alert('Your browser doesn\'t support the geolocation api.');
+			}
+            function success(position) {
+			var latitude		= position.coords.latitude;							// set latitude variable
+			var longitude		= position.coords.longitude;						// set longitude variable
+			console.log(latitude,longitude);
+			getWeather(latitude,longitude);											// get weather for the lat/long
+		}
+    function getWeather(latitude,longitude){
+    link="http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=e4b3d2e05015c304bf7ea1b96a5a9d6e";
     var request = new XMLHttpRequest();
     request.open('GET',link,true);
     request.onload=function(){
@@ -49,10 +48,10 @@
         console.log(obj);
         document.getElementById('weather').innerHTML = obj.weather[0].description;
         document.getElementById('location').innerHTML = obj.name;
-        document.getElementById('temp').innerHTML = obj.main.temp-273.15;
+        document.getElementById('temp').innerHTML = Math.round(obj.main.temp-273.15);
         document.getElementById('icon').src = "http://openweathermap.org/img/w/"+obj.weather[0].icon+".png";
         
-    //}
+    }
     if(request.status==200)
     {
         console.log("ERROR");
