@@ -12,17 +12,24 @@
     <title>Weather App</title>
 </head>
 <body>
-    
+   <div class="box">
     <div class="container">
+        <h1 style="text-align: center;">Weather App</h1>
         <div class="card">
+            
             <h2><i class="fa fa-map-marker"></i>  <span id="location"></span></h2>
-            <h5 id="weather"></h5>
+            <h2 id="country"></h2>
+            <h2 id="weather"></h2>
             <h4><span id="temp"></span><sup>°</sup>C</h4>
             <img src="" id="icon">
             <button onclick="window.location.reload();" class="refresh"><i class="fa fa-refresh"></i></button>
         
         </div>
     </div>
+</div> 
+<footer style="text-align: center;">
+    By Swetha Lakshme S &copy Copyrights reserved.
+</footer>
 </body>
 <script type="text/javascript">
 
@@ -34,13 +41,13 @@
 				window.alert('Your browser doesn\'t support the geolocation api.');
 			}
             function success(position) {
-	    var lat		= position.coords.latitude+0.02; // set latitude variable
+			var lat		= position.coords.latitude+0.02; // set latitude variable
             var latitude = lat.toFixed(6);
-	    var lon		= position.coords.longitude+0.02;	
+			var lon		= position.coords.longitude+0.02;	
             var longitude = lon.toFixed(6);					// set longitude variable
             console.log(lat,lon);
-	    console.log(latitude,longitude);
-	    getWeather(latitude,longitude);											// get weather for the lat/long
+			console.log(latitude,longitude);
+			getWeather(latitude,longitude);											// get weather for the lat/long
 		}
     function getWeather(latitude,longitude){
     link="https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=e4b3d2e05015c304bf7ea1b96a5a9d6e";
@@ -49,9 +56,12 @@
     request.onload=function(){
         var obj = JSON.parse(this.response);
         console.log(obj);
-        document.getElementById('weather').innerHTML = obj.weather[0].description;
+        document.getElementById('weather').innerHTML = obj.weather[0].description.toUpperCase();
         document.getElementById('location').innerHTML = obj.name;
         document.getElementById('temp').innerHTML = Math.round(obj.main.temp-273.15);
+        let regionNames = new Intl.DisplayNames(['en'], {type: 'region'});
+        document.getElementById('country').innerHTML = regionNames.of(obj.sys.country);
+      
         document.getElementById('icon').src = "http://openweathermap.org/img/w/"+obj.weather[0].icon+".png";
         
     }
@@ -62,4 +72,5 @@
     request.send();
 }
 </script>
+
 </html>
