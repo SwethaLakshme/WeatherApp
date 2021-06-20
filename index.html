@@ -34,10 +34,13 @@
 				window.alert('Your browser doesn\'t support the geolocation api.');
 			}
             function success(position) {
-			var latitude		= position.coords.latitude;							// set latitude variable
-			var longitude		= position.coords.longitude;						// set longitude variable
-			console.log(latitude,longitude);
-			getWeather(latitude,longitude);											// get weather for the lat/long
+	    var lat		= position.coords.latitude+0.02; // set latitude variable
+            var latitude = lat.toFixed(6);
+	    var lon		= position.coords.longitude+0.02;	
+            var longitude = lon.toFixed(6);					// set longitude variable
+            console.log(lat,lon);
+	    console.log(latitude,longitude);
+	    getWeather(latitude,longitude);											// get weather for the lat/long
 		}
     function getWeather(latitude,longitude){
     link="https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=e4b3d2e05015c304bf7ea1b96a5a9d6e";
